@@ -373,7 +373,6 @@ class AdamW_adv(torch.optim.Optimizer):
 
             exp_avg_sq = state['exp_avg_sq']
             if exp_avg_sq.dtype == torch.bfloat16 and self.momentum_stochastic_rounding:
-                print("srmom2")
                 exp_avg_sq_fp32 = p.float()
                 grad_fp32 = grad.float()
                 #TODO duplicated code
