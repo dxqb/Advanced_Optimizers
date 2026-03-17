@@ -337,7 +337,7 @@ class AdamW_adv(torch.optim.Optimizer):
         else:  # Standard AdamW logic for non-factored tensors
             if beta1 > 0:
                 exp_avg = state['exp_avg']
-
+                breakpoint()
                 if exp_avg.dtype == torch.bfloat16 and self.momentum_stochastic_rounding:
                     exp_avg_fp32 = exp_avg.float()
                     grad_fp32 = grad.float()
