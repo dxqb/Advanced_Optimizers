@@ -344,6 +344,7 @@ class AdamW_adv(torch.optim.Optimizer):
                     #TODO duplicated code
                     exp_avg_fp32.lerp_(grad_fp32, 1.0 - beta1)
                     # Single stochastic rounding at the end
+                    print("srmom")
                     if random_int_tensor is not None:
                         # Compiled path: use the pre-computed random tensor
                         #TODO use the same random int tensor?
@@ -374,6 +375,7 @@ class AdamW_adv(torch.optim.Optimizer):
 
             exp_avg_sq = state['exp_avg_sq']
             if exp_avg_sq.dtype == torch.bfloat16 and self.momentum_stochastic_rounding:
+                print("srmom2")
                 exp_avg_sq_fp32 = p.float()
                 grad_fp32 = grad.float()
                 #TODO duplicated code
