@@ -343,8 +343,6 @@ class AdamW_adv(torch.optim.Optimizer):
                     grad_fp32 = grad.float()
                     #TODO duplicated code
                     exp_avg_fp32.lerp_(grad_fp32, 1.0 - beta1)
-                    # Single stochastic rounding at the end
-                    print("srmom")
                     if random_int_tensor is not None:
                         # Compiled path: use the pre-computed random tensor
                         #TODO use the same random int tensor?
@@ -380,7 +378,6 @@ class AdamW_adv(torch.optim.Optimizer):
                 grad_fp32 = grad.float()
                 #TODO duplicated code
                 exp_avg_sq_fp32.mul_(beta2).addcmul_(grad_fp32, grad_fp32, value=1 - beta2)
-                # Single stochastic rounding at the end
                 if random_int_tensor is not None:
                     # Compiled path: use the pre-computed random tensor
                     _copy_stochastic_core_(exp_avg_sq, exp_avg_sq_fp32, random_int_tensor)
