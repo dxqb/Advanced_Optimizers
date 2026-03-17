@@ -159,7 +159,7 @@ def copy_stochastic_(target: Tensor, source: Tensor):
     """
     random_int_tensor = _get_random_int_for_sr(source)
     _copy_stochastic_core_(target, source, random_int_tensor)
-    del random_int_tensor
+    #del random_int_tensor FIXME
 
 
 def add_stochastic_(input: Tensor, other: Tensor, alpha: float = 1.0):
