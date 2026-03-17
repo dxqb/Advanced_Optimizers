@@ -346,10 +346,10 @@ class AdamW_adv(torch.optim.Optimizer):
                     if random_int_tensor is not None:
                         # Compiled path: use the pre-computed random tensor
                         #TODO use the same random int tensor?
-                        _copy_stochastic_core_(exp_avg, exp_avg_fp32, random_int_tensor)
+                        param_update._copy_stochastic_core_(exp_avg, exp_avg_fp32, random_int_tensor)
                     else:
                         # Uncompiled path: generate randoms inside
-                        copy_stochastic_(exp_avg, exp_avg_fp32)
+                        param_update.copy_stochastic_(exp_avg, exp_avg_fp32)
                 else:
                     exp_avg.lerp_(grad, 1.0 - beta1)
 
@@ -380,10 +380,10 @@ class AdamW_adv(torch.optim.Optimizer):
                 exp_avg_sq_fp32.mul_(beta2).addcmul_(grad_fp32, grad_fp32, value=1 - beta2)
                 if random_int_tensor is not None:
                     # Compiled path: use the pre-computed random tensor
-                    _copy_stochastic_core_(exp_avg_sq, exp_avg_sq_fp32, random_int_tensor)
+                    param_update._copy_stochastic_core_(exp_avg_sq, exp_avg_sq_fp32, random_int_tensor)
                 else:
                     # Uncompiled path: generate randoms inside
-                    copy_stochastic_(exp_avg_sq, exp_avg_sq_fp32)
+                    param_update.copy_stochastic_(exp_avg_sq, exp_avg_sq_fp32)
             else:
                 exp_avg_sq.mul_(beta2).addcmul_(grad, grad, value=1 - beta2)
 
